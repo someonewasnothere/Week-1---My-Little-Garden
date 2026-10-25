@@ -1,3 +1,4 @@
+
 let selectedCrop = null;
 
 const carrotBtn = document.getElementById('carrot-button');
@@ -29,11 +30,11 @@ plots.forEach(plot => {
             plot.classList.add('planted');
             
             if (selectedCrop === 'carrot') {
-                plot.innerHTML = '<img src="../images/carrot.png" alt="Carrot" class="grown-crop">';
+                plot.innerHTML = '<img src="images/carrot.png" alt="Carrot" class="grown-crop">';
             } else if (selectedCrop === 'berry') {
-                plot.innerHTML = '<img src="../images/berries.png" alt="Berry" class="grown-crop">';
+                plot.innerHTML = '<img src="images/berries.png" alt="Berry" class="grown-crop">';
             } else if (selectedCrop === 'melon') {
-                plot.innerHTML = '<img src="../images/melon.png" alt="Melon" class="grown-crop">';
+                plot.innerHTML = '<img src="images/melon.png" alt="Melon" class="grown-crop">';
             }
             
             // Timer to double / make ready to harvest (set to 4 seconds for testing)
