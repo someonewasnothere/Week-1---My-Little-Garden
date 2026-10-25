@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Garden</title>
+</head>
+
+
+
+
+<body>
+<h1>My Little Garden</h1>
+
+
+<br>
+
+<!--Carrot button-->
+<a href="">
+    <button style="font-size: 25px; border-radius:40px;">
+        <img style="height:100px;" src="../images/carrot.png" alt="Carrots">
+    </button>
+</a>
+<!--Berry button-->
+<a href="">
+    <button style="font-size: 25px; border-radius:40px;">
+        <img style="height:100px;" src="../images/berries.png" alt="Berries">
+    </button>
+</a>
+<!--Watermelon button-->
+<a href="">
+    <button style="font-size: 25px; border-radius:40px;">
+        <img style="height:100px;" src="../images/melon.png" alt="Melons">
+    </button>
+</a>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
