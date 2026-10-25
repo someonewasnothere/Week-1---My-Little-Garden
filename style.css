@@ -1,3 +1,74 @@
+#crop\ selection {
+    display:flex;
+    gap:10px;
+}
+
+.crop-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.crop-count {
+    background-color: white;
+    border: 2px solider black;
+    border-radius: 10px;
+    padding: 1px 6px;
+    font-size: 14px;
+    font-weight: bold;
+    min-width: 16px;
+    text-align: center;
+}
+
+/*tool sleceted highlight */
+.tool-btn.selected {
+    outline: 3px solid gold;
+    transform:scale(1.05);
+}
+
+/* watered farmland background image class */
+.plot.watered {
+    background-image: url("images/watered-farmland.png");
+    background-size:cover;
+    background-position:center;
+}
+
+/* inside sell and buy box formatting */
+#sell-box {
+    flex-direction: column;
+    padding:10px;
+    box-sizing:border-box;
+    font-size: 14px;
+}
+
+#market-header {
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#market-controls {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5px;
+}
+
+#mode-toggle-btn{
+    font-family: inherit;
+    font-size: 11px;
+    padding: 3px 6px;
+    cursor:pointer;
+}
+
+#gold-display{
+    font-weight: bold;
+    color: #333;
+}
+
 #garden-title{
     font-family:'Verdana', Times, serif;
     font-size: 2em;
