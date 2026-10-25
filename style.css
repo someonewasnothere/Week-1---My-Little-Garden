@@ -6,20 +6,89 @@
 
 #game-container{
     text-align: center;
-    width: 800px;
+    width: 900px;
     max-width: 95%;
-    height: 500px;
+    height: 520px;
     max-height: 95%;
     border-style: solid;
     border-width: 5px;
     border-color: black;
-    margin: 10px auto;
+    margin: 20px auto;
     position:relative;
     border-radius: 30px;
     background-image: url("../images/grass.png");
     background-size: cover;
     background-position: center;
 
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    padding: 30px;
+    box-sizing:border-box;
+}
+
+#garden-grid{
+    display:grid;
+    grid-template-columns: repeat(3,100px);
+    grid-template-rows: repeat(3,100px);
+    gap:15px;
+}
+
+.plot{
+    background-color: rgba(200, 215, 230, 0.85);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+
+#sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+#sell-box {
+    width: 280px;
+    height: 100px;
+    background-color: rgba(200, 215, 230, 0.85);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+
+#crops-section, #tools-section {
+    display: flex;
+    gap: 10px;
+}
+
+.tool-btn {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%; /* Makes them circular like your design */
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.tool-btn img {
+    height: 40px; /* Scales down the icons to fit inside circles */
+}
+
+.tool-btn:active {
+    transform: scale(0.95); /* Little squish effect when clicked */
 }
 
 
@@ -64,4 +133,12 @@ body{
     background-color:rgb(7, 114, 172)
 }
 
+.grown-crop{
+    height: 50px;
+    pointer-events: none;
+}
 
+.plot.ready-to-harvest{
+    border-color:gold;
+    box-shadow: 0 0 10px gold;
+}
