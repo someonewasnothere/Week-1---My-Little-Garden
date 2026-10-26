@@ -115,4 +115,5 @@ Extra stuff NOT about the project necessarily:
 
 self improvements i want to do?
     -not let myself hold me down
+-not sure what im supposed to do anymore its 11;25 im so tired and its saying 99 percent done on terra so im just going to type and cry my pains away until it reaches 100 percent 
 
