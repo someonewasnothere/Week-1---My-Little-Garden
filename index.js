@@ -33,12 +33,60 @@ const marketActionBtn = document.getElementById('market-action-btn');
 const marketCropSelect = document.getElementById('market-crop-select');
 const marketAmountInput = document.getElementById('market-amount');
 
+// Task Checklist Elements
+const carrotTaskCount = document.getElementById('carrot-task-count');
+const berryTaskCount = document.getElementById('berry-task-count');
+const melonTaskCount = document.getElementById('melon-task-count');
+const goldTaskCount = document.getElementById('gold-task-count');
+
+const taskCarrot = document.getElementById('task-carrot');
+const taskBerry = document.getElementById('task-berry');
+const taskMelon = document.getElementById('task-melon');
+const taskGold = document.getElementById('task-gold');
+
 // Update UI counters
 function updateUI() {
     if (carrotCountEl) carrotCountEl.textContent = inventory.carrot;
     if (berryCountEl) berryCountEl.textContent = inventory.berry;
     if (melonCountEl) melonCountEl.textContent = inventory.melon;
     if (goldCountEl) goldCountEl.textContent = gold;
+
+    // Task Checklist Progress Updates
+    if (carrotTaskCount) {
+        carrotTaskCount.textContent = inventory.carrot;
+        const completed = inventory.carrot >= 100;
+        if (taskCarrot) {
+            taskCarrot.querySelector('input').checked = completed;
+            taskCarrot.classList.toggle('completed', completed);
+        }
+    }
+
+    if (berryTaskCount) {
+        berryTaskCount.textContent = inventory.berry;
+        const completed = inventory.berry >= 100;
+        if (taskBerry) {
+            taskBerry.querySelector('input').checked = completed;
+            taskBerry.classList.toggle('completed', completed);
+        }
+    }
+
+    if (melonTaskCount) {
+        melonTaskCount.textContent = inventory.melon;
+        const completed = inventory.melon >= 100;
+        if (taskMelon) {
+            taskMelon.querySelector('input').checked = completed;
+            taskMelon.classList.toggle('completed', completed);
+        }
+    }
+
+    if (goldTaskCount) {
+        goldTaskCount.textContent = gold;
+        const completed = gold >= 1000;
+        if (taskGold) {
+            taskGold.querySelector('input').checked = completed;
+            taskGold.classList.toggle('completed', completed);
+        }
+    }
 }
 
 // Clear selected visual outline from all buttons
