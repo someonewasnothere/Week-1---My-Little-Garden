@@ -35,10 +35,10 @@ const marketAmountInput = document.getElementById('market-amount');
 
 // Update UI counters
 function updateUI() {
-    carrotCountEl.textContent = inventory.carrot;
-    berryCountEl.textContent = inventory.berry;
-    melonCountEl.textContent = inventory.melon;
-    goldCountEl.textContent = gold;
+    if (carrotCountEl) carrotCountEl.textContent = inventory.carrot;
+    if (berryCountEl) berryCountEl.textContent = inventory.berry;
+    if (melonCountEl) melonCountEl.textContent = inventory.melon;
+    if (goldCountEl) goldCountEl.textContent = gold;
 }
 
 // Clear selected visual outline from all buttons
@@ -49,21 +49,21 @@ function clearSelection() {
 // Tool / Crop Selection Handler
 function selectTool(action, buttonEl) {
     if (selectedAction === action) {
-        selectedAction = null; // Unselect if clicked again
+        selectedAction = null; 
         clearSelection();
     } else {
         selectedAction = action;
         clearSelection();
-        buttonEl.classList.add('selected');
+        if (buttonEl) buttonEl.classList.add('selected');
     }
 }
 
 // Event listeners for tools & crops
-carrotBtn.addEventListener('click', () => selectTool('carrot', carrotBtn));
-berryBtn.addEventListener('click', () => selectTool('berry', berryBtn));
-melonBtn.addEventListener('click', () => selectTool('melon', melonBtn));
-hoeBtn.addEventListener('click', () => selectTool('hoe', hoeBtn));
-waterBtn.addEventListener('click', () => selectTool('water', waterBtn));
+if (carrotBtn) carrotBtn.addEventListener('click', () => selectTool('carrot', carrotBtn));
+if (berryBtn) berryBtn.addEventListener('click', () => selectTool('berry', berryBtn));
+if (melonBtn) melonBtn.addEventListener('click', () => selectTool('melon', melonBtn));
+if (hoeBtn) hoeBtn.addEventListener('click', () => selectTool('hoe', hoeBtn));
+if (waterBtn) waterBtn.addEventListener('click', () => selectTool('water', waterBtn));
 
 // Garden Plots Handler
 const plots = document.querySelectorAll('.plot');
@@ -75,8 +75,8 @@ plots.forEach(plot => {
         if (selectedAction === 'water') {
             plot.classList.add('watered');
 
-            // If a crop was already planted on dry ground, start growing now that it's watered
-            if (plot.dataset.cropType && !plot.dataset.growingStarted) {
+            // If a crop is planted AND hasn't started growing yet, start growth NOW because it's watered
+            if (plot.classList.contains('planted') && !plot.dataset.growingStarted) {
                 startGrowth(plot);
             }
             return;
@@ -84,9 +84,8 @@ plots.forEach(plot => {
 
         // 2. PLANTING CROP CLICKED
         if (['carrot', 'berry', 'melon'].includes(selectedAction)) {
-            // Plant only if plot is empty AND player has at least 1 crop in inventory
             if (!plot.classList.contains('planted') && inventory[selectedAction] > 0) {
-                inventory[selectedAction]--; // Decrease counter by 1
+                inventory[selectedAction]--; 
                 updateUI();
 
                 plot.classList.add('planted');
@@ -99,7 +98,7 @@ plots.forEach(plot => {
 
                 plot.innerHTML = `<img src="${imageSrc}" alt="${selectedAction}" class="grown-crop">`;
 
-                // If plot is ALREADY watered, start growth timer immediately
+                // ONLY start growth timer if the plot is ALREADY watered!
                 if (plot.classList.contains('watered')) {
                     startGrowth(plot);
                 }
@@ -112,11 +111,9 @@ plots.forEach(plot => {
             if (plot.classList.contains('ready-to-harvest')) {
                 const cropType = plot.dataset.cropType;
 
-                // Increase inventory by 2 (1 planted + 1 grown)
                 inventory[cropType] += 2;
                 updateUI();
 
-                // Reset Plot
                 plot.innerHTML = '';
                 plot.classList.remove('planted', 'ready-to-harvest', 'watered');
                 delete plot.dataset.cropType;
@@ -127,54 +124,64 @@ plots.forEach(plot => {
     });
 });
 
-//Helper function to start 4-second countdown
-
+// Helper function to start 4-second growth countdown
 function startGrowth(plot) {
+    if (plot.dataset.growingStarted) return; // Prevent multiple timers
     plot.dataset.growingStarted = "true";
+    
     setTimeout(() => {
-        plot.innerHTML += '<span style="file-size: 12px; display:block; color:gold;">(x2 Ready!)</span>';
-        plot.classList.add('ready-to-harvest');
+        // Double check if it's still watered when timer finishes
+        if (plot.classList.contains('watered') && plot.classList.contains('planted')) {
+            plot.innerHTML += '<span style="font-size: 12px; display:block; color:gold;">(x2 Ready!)</span>';
+            plot.classList.add('ready-to-harvest');
+        } else {
+            // If it dried out or was reset, clear growing status so it can grow later when watered
+            delete plot.dataset.growingStarted;
+        }
     }, 4000);
 }
 
-//market stuff
-
-modeToggleBtn.addEventListener('click', () => {
-    if (marketMode === 'sell') {
-        marketMode = 'buy';
-        modeToggleBtn.textContent = 'Switch to Sell';
-        marketActivationBtn.textContent = 'Buy';
-    } else{
-        marketMode = 'sell';
-        modeToggleBtn.textContent = 'Switch to Buy';
-        marketActionBtn.textContent = 'Sell';
-    }
-});
-
-marketActionBtn.addEventListener('click', () => {
-    const crop = marketCropSelect.value;
-    const amount = parseInt(marketAmountInput.value) || 0;
-
-    if (amount <= 0) return;
-
-    if (marketMode === 'sell') {
-        if (inventory[crop] >= amount) {
-            inventory[crop] -= amount;
-            gold+= price[crop].sell *amount;
-            updateUI();
+// 4. BUY / SELL MARKET LOGIC
+if (modeToggleBtn) {
+    modeToggleBtn.addEventListener('click', () => {
+        if (marketMode === 'sell') {
+            marketMode = 'buy';
+            modeToggleBtn.textContent = 'Switch to Sell';
+            marketActionBtn.textContent = 'Buy';
         } else {
-            alert("You don't have enough ${crop}s to sell!");
+            marketMode = 'sell';
+            modeToggleBtn.textContent = 'Switch to Buy';
+            marketActionBtn.textContent = 'Sell';
         }
-    } else if (marketMode === 'buy') {
-        const totalCost = prices[crop].buy *amount;
-        if (gold>= totalCost) {
-            gold -= totalCost;
-            inventory[crop] += amount;
-            updateUI();
-        } else{
-            alert("Not enough gold! You need ${totalCost} gold.");
+    });
+}
+
+if (marketActionBtn) {
+    marketActionBtn.addEventListener('click', () => {
+        const crop = marketCropSelect.value.toLowerCase();
+        const amount = parseInt(marketAmountInput.value) || 0;
+
+        if (amount <= 0) return;
+
+        if (marketMode === 'sell') {
+            if (inventory[crop] >= amount) {
+                inventory[crop] -= amount;
+                gold += prices[crop].sell * amount;
+                updateUI();
+            } else {
+                alert(`You don't have enough ${crop}s to sell!`);
+            }
+        } else if (marketMode === 'buy') {
+            const totalCost = prices[crop].buy * amount;
+            if (gold >= totalCost) {
+                gold -= totalCost;
+                inventory[crop] += amount;
+                updateUI();
+            } else {
+                alert(`Not enough gold! You need ${totalCost} gold.`);
+            }
         }
-    }
-});
+    });
+}
 
 updateUI();
